@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+ROLE_NAME="$1"
+
+if [[ -d ./roles/$ROLE_NAME ]]; then
+  echo "Role already exists. Remove the role to scaffold a new one."
+  exit 1
+fi
+
+mkdir -p ./roles/$ROLE_NAME/{defaults,tasks}
+mkdir -p ./roles/$ROLE_NAME/tasks/distributions
+
+echo "---" > ./roles/$ROLE_NAME/defaults/main.yml
+echo "${ROLE_NAME}_os_distribution: \"{{ global_os_distribution | default(ansible_distribution) }}\"" >> ./roles/$ROLE_NAME/default/main.yml
+
+echo "---" > ./roles/$ROLE_NAME/tasks/main.yml
+echo "- include: distributions/{{ ${ROLE_NAME}_os_distribution | lower }}.yml" >> ./roles/$ROLE_NAME/tasks/main.yml
+
+echo "---" > ./roles/$ROLE_NAME/tasks/distributions/fedora.yml
+
+echo ""
+echo "---"
+echo ./roles/$ROLE_NAME
