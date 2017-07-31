@@ -1,1 +1,12 @@
+.ruby-version
+.ruby-gemset
+.vagrant/*
+*.swp
+tmp/*
+!tmp/.keep
+*.pyc
 *.retry
+inventories/group_vars/*/secret/*
+group_vars/*/secret/*
+galaxy_roles/*
+!galaxy_roles/.keep
