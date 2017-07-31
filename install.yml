@@ -47,3 +47,11 @@
     - role: vagrant
       tags:
         - vagrant
+
+    - role: adobe_flash
+      tags:
+        - flash
+
+    - role: nuvola_player
+      tags:
+        - nuvola

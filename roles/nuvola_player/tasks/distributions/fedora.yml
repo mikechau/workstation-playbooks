@@ -1,0 +1,27 @@
+---
+- name: add nuvola player rpm key
+  rpm_key:
+    key: "{{ nuvola_player_rpm_key_url }}"
+    state: present
+  become: true
+
+- name: add nuvola player repo
+  command: "/usr/bin/dnf config-manager --add-repo {{ nuvola_player_rpm_repository }}"
+  become: true
+
+- name: install nuvola player dependencies
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - gstreamer1-plugin-mpg123
+  become: true
+
+- name: install nuvola player
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  become: true
+  with_items:
+    - nuvolaplayer3-8tracks
+    - nuvolaplayer3-soundcloud

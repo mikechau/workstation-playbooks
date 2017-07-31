@@ -1,5 +1,5 @@
 ---
 vagrant_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
 vagrant_version: "1.9.7"
-vagrant_arch: x86_64
+vagrant_arch: "{{ ansible_machine }}"
 vagrant_rpm_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_{{ vagrant_arch }}.rpm"

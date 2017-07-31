@@ -1,0 +1,5 @@
+---
+adobe_flash_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
+adobe_flash_arch: "{{ ansible_machine }}"
+adobe_flash_install_version: 1.0-1
+adobe_flash_rpm_repository_url: "http://linuxdownload.adobe.com/adobe-release/adobe-release-{{ adobe_flash_arch }}-{{ adobe_flash_install_version }}.noarch.rpm"

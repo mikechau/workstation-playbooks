@@ -1,0 +1,16 @@
+---
+- name: add adobe flash repo
+  dnf:
+    name: "{{ adobe_flash_rpm_repository_url }}"
+    state: present
+  become: true
+
+- name: install flash
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - flash-plugin
+    - alsa-plugins-pulseaudio
+    - libcurl
+  become: true

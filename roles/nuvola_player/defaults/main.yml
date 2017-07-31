@@ -1,0 +1,7 @@
+---
+nuvola_player_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
+nuvola_player_rpm_key_url: http://keyserver.ubuntu.com/pks/lookup?search=0x40554B8FA5FE6F6A&op=get
+nuvola_player_rpm_codename: fc26
+nuvola_player_rpm_arch: "{{ ansible_machine }}"
+nuvola_player_rpm_component: stable
+nuvola_player_rpm_repository: "https://tiliado.eu/nuvolaplayer/repository/rpm/{{ nuvola_player_rpm_codename }}/{{ nuvola_player_rpm_arch }}/{{ nuvola_player_rpm_component }}"
