@@ -1,0 +1,3 @@
+---
+- src: rvm_io.ruby
+  path: galaxy_roles

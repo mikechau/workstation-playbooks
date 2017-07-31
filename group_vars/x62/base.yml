@@ -5,6 +5,7 @@ base_packages:
   - libcurl
   - libcurl-devel
   - jemalloc
+  - jemalloc-devel
   - vim
   - speedcrunch
   - mariadb
@@ -32,6 +33,7 @@ base_packages:
   - unar
   - openssl
   - openssl-devel
+  - readline
   - readline-devel
   - zlib-devel
   - libffi-devel
@@ -44,4 +46,8 @@ base_packages:
   - autossh
   - libselinux-python
   - screenfetch
-
+  - automake
+  - libtool
+  - bison
+  - bzip2
+  - gdbm-devel
