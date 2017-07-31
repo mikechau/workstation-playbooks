@@ -1,4 +1,4 @@
 ---
 sublime_text_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
-sublime_text_rpm_key: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+sublime_text_rpm_key_url: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 sublime_text_rpm_repository: https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo

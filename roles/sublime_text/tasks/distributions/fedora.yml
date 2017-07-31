@@ -1,7 +1,7 @@
 ---
 - name: add sublime text rpm key
   rpm_key:
-    key: "{{ sublime_text_rpm_key }}"
+    key: "{{ sublime_text_rpm_key_url }}"
     state: present
   become: true
 
