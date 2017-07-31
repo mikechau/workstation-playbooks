@@ -35,8 +35,7 @@
         - sublime
 
     - role: rvm_io.ruby
-      rvm1_rubies:
-        - ruby-2.4.1
+      rvm1_rubies: "{{ ruby_install_versions }}"
       rvm1_install_flags: --auto-dotfiles --user-install
       rvm1_ruby_install_flags: --with-jemalloc
       rvm1_install_path: "/home/{{ lookup('env', 'USER') }}/.rvm"
