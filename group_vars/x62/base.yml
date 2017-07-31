@@ -1,0 +1,47 @@
+---
+base_packages:
+  - wget
+  - curl
+  - libcurl
+  - libcurl-devel
+  - jemalloc
+  - vim
+  - speedcrunch
+  - mariadb
+  - mariadb-devel
+  - postgresql
+  - postgresql-devel
+  - mongo-tools
+  - make
+  - autoconf
+  - tig
+  - htop
+  - gmp-devel
+  - python-gpgme
+  - i2c-tools
+  - nfs-utils
+  - libnfsidmap
+  - lm_sensors
+  - monitor-edid
+  - tree
+  - xournal
+  - unclutter
+  - gparted
+  - p7zip
+  - p7zip-plugins
+  - unar
+  - openssl
+  - openssl-devel
+  - readline-devel
+  - zlib-devel
+  - libffi-devel
+  - ncurses-devel
+  - libyaml-devel
+  - libxml2
+  - libxml2-devel
+  - libxslt-devel
+  - libsqlite3x-devel
+  - autossh
+  - libselinux-python
+  - screenfetch
+

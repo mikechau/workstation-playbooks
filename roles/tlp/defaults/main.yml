@@ -1,0 +1,4 @@
+tlp_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
+tlp_force_install: false
+tlp_install_thinkpad_addons: false
+tlp_release_version: 1.0-0

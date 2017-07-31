@@ -1,0 +1,18 @@
+---
+- name: install
+  hosts: all
+  roles:
+    # - role: base
+
+    # - role: kernel.devel
+
+    # - role: selinux.config
+
+    # - role: selinux.policies
+
+    # - role: rpmfusion
+    #   when: "ansible_distribution | lower == 'fedora'"
+
+    # - role: tlp
+
+    - role: virtualbox

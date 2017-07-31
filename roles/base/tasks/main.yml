@@ -1,0 +1,8 @@
+---
+- name: update packages
+  package:
+    name: "*"
+    state: latest
+  become: true
+
+- include: "distributions/{{ base_os_distribution | lower }}.yml"

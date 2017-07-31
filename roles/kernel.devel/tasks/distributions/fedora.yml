@@ -1,0 +1,26 @@
+---
+- name: install packages
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - fedpkg
+    - fedora-packager
+    - rpmdevtools
+    - ncurses-devel
+    - pesign
+    - qt3-devel
+    - libXi-devel
+    - gcc-c++
+    - kernel-tools-libs-devel
+  become: true
+
+- name: add user to pesign
+  lineinfile:
+    path: /etc/pesign/users
+    line: "{{ lookup('env','USER') }}"
+  become: true
+
+- name: authorize user to build
+  shell: "bash -lc '/usr/libexec/pesign/pesign-authorize-users'"
+  become: true

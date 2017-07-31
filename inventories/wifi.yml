@@ -1,0 +1,5 @@
+[thinkpad]
+x62-wifi.home
+
+[x62:children]
+thinkpad

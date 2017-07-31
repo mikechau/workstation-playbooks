@@ -1,0 +1,84 @@
+---
+- name: add selinux policy
+  template:
+    src: "{{ tlp_os_distribution }}/selinux.policies/my-tlp.te.j2"
+    dest: /etc/selinux.policies/my-tlp.te
+    mode: u=rw,g=r,o=r
+  become: true
+  register: tlp_selinux_policy_template_result
+
+- name: set selinux /var/run/tlp/lock_tlp type
+  command: /usr/sbin/semanage fcontext -a -t tlp_var_run_t /var/run/tlp/lock_tlp
+  become: true
+  register: lock_tlp_selinux_type_result
+  failed_when: "((lock_tlp_selinux_type_result.rc != 0) and ('already defined' not in lock_tlp_selinux_type_result.stderr))"
+  changed_when: lock_tlp_selinux_type_result.rc == 0
+
+- name: restorecon for /var/run/tlp/lock_tlp
+  command: /usr/sbin/restorecon -v /run/tlp/lock_tlp
+  become: true
+
+- name: set selinux /var/run/tlp/last_pwr type
+  command: /usr/sbin/semanage fcontext -a -t tlp_var_run_t /var/run/tlp/last_pwr
+  become: true
+  register: last_pwr_tlp_selinux_type_result
+  failed_when: "((last_pwr_tlp_selinux_type_result.rc != 0) and ('already defined' not in last_pwr_tlp_selinux_type_result.stderr))"
+  changed_when: last_pwr_tlp_selinux_type_result.rc == 0
+
+- name: restorecon for /var/run/tlp/last_pwr
+  command: /usr/sbin/restorecon -v /run/tlp/last_pwr
+  become: true
+
+- name: compile selinux policy
+  command: /usr/bin/make my-tlp.pp -f /usr/share/selinux/devel/Makefile
+  args:
+    chdir: /etc/selinux.policies
+  become: true
+  when: tlp_selinux_policy_template_result | changed or tlp_force_install
+  register: tlp_selinux_policy_compile_results
+  failed_when: "((tlp_selinux_policy_template_result | changed) or (tlp_force_install)) and (tlp_selinux_policy_compile_results.rc != 0) and ('is up to date.' not in tlp_selinux_policy_compile_results.stdout)"
+
+- name: enable selinux module
+  command: /usr/sbin/semodule -X 300 -i my-tlp.pp
+  args:
+    chdir: /etc/selinux.policies
+  become: true
+  when: tlp_selinux_policy_template_result | changed or tlp_force_install
+
+- name: install tlp thinkpad repo
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release-{{ tlp_release_version }}.noarch.rpm"
+  become: true
+
+- name: install tlp
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - tlp
+    - tlp-rdw
+    - kernel-devel
+  become: true
+
+# FIXME: Installs via tlp-updates-testing is only temporary.
+# http://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html#installation
+- name: install tlp addons
+  dnf:
+    name: "{{ item }}"
+    enablerepo: tlp-updates-testing
+    state: latest
+  with_items:
+    - akmod-tp_smapi
+    - akmod-acpi_call
+  when: tlp_install_thinkpad_addons
+  become: true
+
+- name: enable tlp
+  service:
+    name: tlp
+    state: started
+    enabled: true
+  become: true

@@ -1,0 +1,79 @@
+---
+- name: add virtualbox repo
+  command: "/usr/bin/dnf --assumeyes config-manager --add-repo {{ virtualbox_rpm_repository }} update"
+  become: true
+
+- name: update dnf
+  command: /usr/bin/dnf --assumeyes update
+  become: true
+
+- name: install virtualbox dependencies
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+  - binutils
+  - gcc
+  - make
+  - patch
+  - dkms
+  - libgomp
+  - glibc-headers
+  - glibc-devel
+  - kernel-headers
+  - kernel-devel
+  become: true
+
+- name: install virtualbox
+  package:
+    name: "VirtualBox-{{ virtualbox_version }}"
+    state: latest
+  become: true
+  register: virtualbox_install_result
+
+- name: rebuild kernel modules
+  command: "/usr/lib/virtualbox/vboxdrv.sh setup"
+  become: true
+  when: virtualbox_install_result | changed
+
+- name: add user to virtualbox group
+  user:
+    name: "{{ lookup('env','USER') }}"
+    groups: vboxusers
+    append: true
+    state: present
+  become: true
+
+- name: get virtualbox version
+  shell: |
+    version=$(/usr/bin/VBoxManage -v)
+    var1=$(echo $version | cut -d 'r' -f 1)
+    var2=$(echo $version | cut -d 'r' -f 2)
+    echo $var1
+    echo $var2
+  register: virtualbox_version_result
+
+- name: check if extension pack is not installed
+  command: /usr/bin/VBoxManage list extpacks
+  register: virtualbox_extpack_initial_check_result
+  changed_when: "virtualbox_extpack_initial_check_result.stdout == 'Extension Packs: 0'"
+
+- name: check if extension pack is installed and matches current version
+  shell: "/usr/bin/VBoxManage list extpacks | grep -c -e '{{ virtualbox_version_result.stdout_lines.0 }}' -e '{{ virtualbox_version_result.stdout_lines.1 }}'"
+  register: virtualbox_expack_current_check_result
+  changed_when: "virtualbox_expack_current_check_result.stdout == 2"
+
+- name: download virtualbox extension
+  get_url:
+    url: "http://download.virtualbox.org/virtualbox/{{ virtualbox_version_result.stdout_lines.0 }}/Oracle_VM_VirtualBox_Extension_Pack-{{ virtualbox_version_result.stdout_lines.0 }}-{{ virtualbox_version_result.stdout_lines.1 }}.vbox-extpack"
+    dest: "/tmp/Oracle_VM_VirtualBox_Extension_Pack-{{ virtualbox_version_result.stdout_lines.0 }}-{{ virtualbox_version_result.stdout_lines.1 }}.vbox-extpack"
+    mode: 0444
+  register: virtualbox_extension_download_result
+  when: "(virtualbox_extpack_initial_check_result | changed) or (virtualbox_expack_current_check_result | changed)"
+
+# NOTE: Have to install with a license acceptance key, could change.
+# https://forums.virtualbox.org/viewtopic.php?p=391279#p391279
+- name: install virtualbox extensions
+  command: "/usr/bin/VBoxManage extpack install --replace {{ virtualbox_extension_download_result.dest }} --accept-license={{ virtualbox_license_acceptance_key }}"
+  when: "(virtualbox_extpack_initial_check_result | changed) or (virtualbox_expack_current_check_result | changed)"
+  become: true

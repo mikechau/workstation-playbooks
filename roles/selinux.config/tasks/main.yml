@@ -1,0 +1,4 @@
+---
+- name: enable daemons_enable_cluster_mode
+  command: /usr/sbin/setsebool -P daemons_enable_cluster_mode 1
+  become: true

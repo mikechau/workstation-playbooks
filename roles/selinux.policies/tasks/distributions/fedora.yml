@@ -1,0 +1,9 @@
+---
+- name: install selinux policies packages
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - checkpolicy
+    - selinux-policy-devel
+  become: true

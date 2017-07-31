@@ -1,0 +1,26 @@
+---
+# FIXME: dnf group installs are broken
+# https://bugzilla.redhat.com/show_bug.cgi?id=1471017
+#
+# - name: install development packages
+#   dnf:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - "@Development tools"
+#     - "@Virtualization"
+#   become_user: true
+
+- name: install development tools
+  command: "dnf install '@{{ item }}' -y"
+  with_items:
+    - Development tools
+    - Virtualization
+  become: true
+
+- name: install packages
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ base_packages }}"
+  become: true
