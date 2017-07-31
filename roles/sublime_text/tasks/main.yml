@@ -1,0 +1,2 @@
+---
+- include: distributions/{{ sublime_text_os_distribution | lower }}.yml

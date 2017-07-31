@@ -2,17 +2,34 @@
 - name: install
   hosts: all
   roles:
-    # - role: base
+    - role: base
+      tags:
+        - base
 
-    # - role: kernel.devel
+    - role: kernel.devel
+      tags:
+        - kernel
 
-    # - role: selinux.config
+    - role: selinux.config
+      tags:
+        - selinux
 
-    # - role: selinux.policies
+    - role: selinux.policies
+      tags: selinux
 
-    # - role: rpmfusion
-    #   when: "ansible_distribution | lower == 'fedora'"
+    - role: rpmfusion
+      when: "ansible_distribution | lower == 'fedora'"
+      tags:
+        - rpmfusion
 
-    # - role: tlp
+    - role: tlp
+      tags:
+        - tlp
 
     - role: virtualbox
+      tags:
+        - virtualbox
+
+    - role: sublime_text
+      tags:
+        - sublime

@@ -1,0 +1,16 @@
+---
+- name: add sublime text rpm key
+  rpm_key:
+    key: "{{ sublime_text_rpm_key }}"
+    state: present
+  become: true
+
+- name: add sublime text repo
+  command: "/usr/bin/dnf config-manager --add-repo {{ sublime_text_rpm_repository }}"
+  become: true
+
+- name: install sublime text
+  dnf:
+    name: sublime-text
+    state: latest
+  become: true
