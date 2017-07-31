@@ -43,3 +43,7 @@
       become: true
       tags:
         - ruby
+
+    - role: vagrant
+      tags:
+        - vagrant

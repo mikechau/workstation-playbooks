@@ -51,3 +51,4 @@ base_packages:
   - bison
   - bzip2
   - gdbm-devel
+  - ruby

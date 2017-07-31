@@ -1,0 +1,6 @@
+---
+- name: install vagrant
+  dnf:
+    name: "{{ vagrant_rpm_url }}"
+    state: present
+  become: true
