@@ -12,3 +12,13 @@
     path: "{{ lookup('env','HOME') }}/.bash_profile"
     line: '[[ -f "$HOME/.dotrc" ]] && source $HOME/.dotrc'
     insertafter: fi
+
+- name: add fedora rc files
+  template:
+    src: "fedora/{{ item }}.j2"
+    dest: "{{ lookup('env', 'HOME') }}/.{{ item }}"
+    owner: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('env', 'USER') }}"
+    mode: u=rw,g=rw,o=r
+  with_items:
+    - vimrc

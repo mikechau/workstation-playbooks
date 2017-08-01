@@ -1,2 +1,21 @@
 ---
+- name: create bash lib dir
+  file:
+    path: "{{ lookup('env','HOME') }}/.bash_lib"
+    state: directory
+    owner: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('env', 'USER') }}"
+    mode: u=rwx,g=rwx,o=rx
+
 - include: distributions/{{ dotfiles_os_distribution | lower }}.yml
+
+- name: add home specific rc files
+  template:
+    src: "home/{{ item }}.j2"
+    dest: "{{ lookup('env', 'HOME') }}/.{{ item }}"
+    owner: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('env', 'USER') }}"
+    mode: u=rw,g=rw,o=r
+  with_items:
+    - irbrc
+    - gitconfig

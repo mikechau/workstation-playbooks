@@ -1,0 +1,12 @@
+[push]
+  default = simple
+[alias]
+  hide = update-index --assume-unchanged
+  unhide = update-index --no-assume-unchanged
+  doff = reset HEAD^
+[commit]
+  gpgsign = true
+[interactive]
+  singleKey = true
+[core]
+  editor = 'vim'

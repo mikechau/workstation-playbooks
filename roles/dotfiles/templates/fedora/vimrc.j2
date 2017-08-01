@@ -1,0 +1,15 @@
+" http://vim.wikia.com/wiki/Accessing_the_system_clipboard
+
+syntax on
+
+filetype plugin indent on
+
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set nospell
+
+" https://stackoverflow.com/questions/657447/vim-clear-last-search-highlighting
+"This unsets the "last search pattern" register by hitting return
+nnoremap <CR> :noh<CR><CR>
