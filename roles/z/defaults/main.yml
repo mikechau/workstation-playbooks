@@ -1,0 +1,4 @@
+---
+z_git_repo: https://github.com/rupa/z.git
+z_git_version: master
+z_src_path: "{{ lookup('env', 'HOME') }}/code/src/z"
