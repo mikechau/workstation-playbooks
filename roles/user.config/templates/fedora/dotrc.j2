@@ -1,0 +1,117 @@
+###############################################################################
+# TERMINAL PROCESS STATUS FORMATTING
+###############################################################################
+
+export PROMPT_DIRTRIM=1
+
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+case "$TERM" in
+  xterm*|rxvt*)
+    PS1="\[\e]0;\u@\h: \w\a\]$PS1"
+    ;;
+  *)
+    ;;
+esac
+
+###############################################################################
+# TERMINAL HISTORY LOGGING
+#
+# References:
+#   - https://stackoverflow.com/questions/9457233/unlimited-bash-history
+#   - http://linux.101hacks.com/command-line-history/display-timestamp-using-histtimeformat/
+#   - http://www.acehints.com/2012/07/histtimeformat-how-to-see-linux.html
+###############################################################################
+shopt -s histappend
+export HISTFILESIZE=
+export HISTSIZE=
+export HISTTIMEFORMAT="[%D %r (%a)] "
+export HISTFILE=~/.bash_eternal_history
+
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+################################################################################
+# LOAD Z
+#
+# References:
+#   - https://github.com/rupa/z
+################################################################################
+if [ -f ~/.bash_lib/z.sh ]; then
+  . ~/.bash_lib/z.sh
+fi
+
+################################################################################
+# COLOR LS & GREP
+################################################################################
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  alias dir='dir --color=auto'
+  alias vdir='vdir --color=auto'
+
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
+
+################################################################################
+# ALIAS LS
+################################################################################
+alias la='ls -A'
+alias lah='ls -lah'
+
+################################################################################
+# ALIAS VIM TO VIMX
+################################################################################
+if [ -e /usr/bin/vimx ]; then
+  alias vim='/usr/bin/vimx'
+fi
+
+################################################################################
+# ALIAS DIFF TO COLORDIFF
+################################################################################
+if [ -e /usr/bin/colordiff ]; then
+  alias diff='/usr/bin/colordiff'
+fi
+
+################################################################################
+# ALIAS PJSON TO PYTHON JSON TOOL
+################################################################################
+alias pjson='python -m json.tool'
+
+################################################################################
+# ALIAS ALERT TO NOTIFY-SEND
+################################################################################
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+################################################################################
+# ALIAS MOUNT TO BE PRETTY
+################################################################################
+alias mount='mount | column -t'
+
+################################################################################
+# ALIAS PORTS TO SHOW OPEN PORTS
+################################################################################
+alias ports='netstat -tulanp'
+
+################################################################################
+# ALIAS DF & DU TO BE PRETTY
+################################################################################
+alias df='df -H'
+alias du='du -ch'
+
+################################################################################
+# ALIASES TO PROTECT ROOT
+################################################################################
+alias rm='rm -I --preserve-root'
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+################################################################################
+# ALIASES TO SHOW SYSTEM INFO
+################################################################################
+alias meminfo='free -m -l -t -h'
+alias psmem='ps auxf | sort -nr -k 4'
+alias pscpu='ps auxf | sort -nr -k 3'
+alias cpuinfo='lscpu'

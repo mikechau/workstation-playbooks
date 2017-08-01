@@ -1,0 +1,14 @@
+---
+- name: add .dotrc
+  template:
+    src: fedora/dotrc.j2
+    dest: "{{ lookup('env','HOME') }}/.dotrc"
+    mode: u=rw,g=rw,o=r
+    owner: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('env', 'USER') }}"
+
+- name: add dotrc to bash_profile
+  lineinfile:
+    path: "{{ lookup('env','HOME') }}/.bash_profile"
+    line: '[[ -f "$HOME/.dotrc" ]] && source $HOME/.dotrc'
+    insertafter: fi

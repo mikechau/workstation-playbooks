@@ -55,3 +55,7 @@
     - role: nuvola_player
       tags:
         - nuvola
+
+    - role: user.config
+      tags:
+        - user
