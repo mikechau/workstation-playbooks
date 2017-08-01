@@ -28,3 +28,4 @@
   with_items:
     - irbrc
     - gitconfig
+    - inputrc
