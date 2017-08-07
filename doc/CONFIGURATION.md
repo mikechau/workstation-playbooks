@@ -12,6 +12,6 @@
 
   - `Kupfer preferences` > `Keyboard` > `Show Main Interface`.
 
-2. Update Kupfer plugin for `applications` to use Cinnamon.
+2. Update Kupfer Applications plugin to use Cinnamon.
 
   - `Kupfer preferences` > `Plugins` > `Applications` > `Applications for Desktop Environment` > `X-Cinnamon`
