@@ -57,3 +57,5 @@ base_packages:
   - jq
   - redshift
   - redshift-gtk
+  - powertop
+  - kupfer
