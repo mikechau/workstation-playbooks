@@ -67,3 +67,18 @@
     - role: ulauncher
       tags:
         - ulauncher
+
+    - role: fubarhouse.nodejs
+      node_version: 6.11.3
+      node_versions:
+        - 4.8.4
+        - 7.10.1
+        - 8.4.0
+      node_packages:
+        - yarn
+      install_nvm: true
+      install_nvm_git: true
+      install_nodejs: true
+      install_npm: true
+      tags:
+        - nodejs

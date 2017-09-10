@@ -58,3 +58,5 @@ base_packages:
   - redshift
   - redshift-gtk
   - powertop
+  - nodejs
+
