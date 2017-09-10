@@ -1,0 +1,21 @@
+---
+- name: install pidgin
+  dnf:
+    name: pidgin
+    state: latest
+  become: true
+
+- name: add purple-facebook repo
+  get_url:
+    url: http://download.opensuse.org/repositories/home:/jgeboski/Fedora_26/home:jgeboski.repo
+    dest: /etc/yum.repos.d/jgeboski.repo
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  become: true
+
+- name: install purple-facebook
+  dnf:
+    name: purple-facebook
+    state: latest
+  become: true

@@ -1,0 +1,2 @@
+---
+- include: distributions/{{ pidgin_os_distribution | lower }}.yml

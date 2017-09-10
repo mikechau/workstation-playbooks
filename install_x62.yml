@@ -82,3 +82,11 @@
       install_npm: true
       tags:
         - nodejs
+
+    - role: pip.packages
+      tags:
+        - python
+
+    - role: pidgin
+      tags:
+        - pidgin

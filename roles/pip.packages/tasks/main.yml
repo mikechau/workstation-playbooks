@@ -1,0 +1,19 @@
+---
+- name: install packages
+  pip:
+    name: "{{ item }}"
+  state: latest
+  become: true
+  with_items:
+    - mysqlclient
+    - psycopg2
+    - awscli
+    - setuptools
+    - httplib2
+    - cryptography
+    - boto3
+    - certifi
+    - flatdict
+    - prettytable
+    - virtualenv
+    - ansible

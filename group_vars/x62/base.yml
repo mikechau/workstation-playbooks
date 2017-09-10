@@ -59,4 +59,4 @@ base_packages:
   - redshift-gtk
   - powertop
   - nodejs
-
+  - python-devel
