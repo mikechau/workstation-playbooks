@@ -1,2 +1,7 @@
 ---
+# dotfiles_user:
+
+dotfiles_home_path: "/home/{{ dotfiles_user }}"
+dotfiles_group: "{{ dotfiles_user }}"
+
 dotfiles_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"

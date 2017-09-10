@@ -1,4 +1,11 @@
 ---
+- name: check vars
+  fail:
+    msg: "variable '{{ item }}' is not defined"
+  when: item not in vars
+  with_items:
+    - virtualbox_user
+
 - name: add virtualbox repo
   command: "/usr/bin/dnf --assumeyes config-manager --add-repo {{ virtualbox_rpm_repository }} update"
   become: true
@@ -38,7 +45,7 @@
 
 - name: add user to virtualbox group
   user:
-    name: "{{ lookup('env','USER') }}"
+    name: virtualbox_user
     groups: vboxusers
     append: true
     state: present

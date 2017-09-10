@@ -2,23 +2,23 @@
 - name: add .dotrc
   template:
     src: fedora/dotrc.j2
-    dest: "{{ lookup('env','HOME') }}/.dotrc"
+    dest: "{{ dotfiles_home_path }}/.dotrc"
     mode: u=rw,g=rw,o=r
-    owner: "{{ lookup('env', 'USER') }}"
-    group: "{{ lookup('env', 'USER') }}"
+    owner: "{{ dotfiles_user }}"
+    group: "{{ dotfiles_group }}"
 
 - name: add dotrc to bash_profile
   lineinfile:
-    path: "{{ lookup('env','HOME') }}/.bash_profile"
+    path: "{{ dotfiles_home_path }}/.bash_profile"
     line: '[[ -f "$HOME/.dotrc" ]] && source $HOME/.dotrc'
     insertafter: fi
 
 - name: add fedora rc files
   template:
     src: "fedora/{{ item }}.j2"
-    dest: "{{ lookup('env', 'HOME') }}/.{{ item }}"
-    owner: "{{ lookup('env', 'USER') }}"
-    group: "{{ lookup('env', 'USER') }}"
+    dest: "{{ dotfiles_home_path }}/.{{ item }}"
+    owner: "{{ dotfiles_user }}"
+    group: "{{ dotfiles_group }}"
     mode: u=rw,g=rw,o=r
   with_items:
     - vimrc

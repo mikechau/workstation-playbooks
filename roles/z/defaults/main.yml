@@ -1,4 +1,9 @@
 ---
+# z_user:
+
+z_home_path: "/home/{{ z_user }}"
+z_group: "{{ z_user }}"
+
 z_git_repo: https://github.com/rupa/z.git
 z_git_version: master
-z_src_path: "{{ lookup('env', 'HOME') }}/code/src/z"
+z_src_path: "{{ z_home_path }}/code/src/z"

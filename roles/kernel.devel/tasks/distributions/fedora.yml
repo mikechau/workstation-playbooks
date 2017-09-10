@@ -1,4 +1,11 @@
 ---
+- name: check vars
+  fail:
+    msg: "variable '{{ item }}' is not defined"
+  when: item not in vars
+  with_items:
+    - kernel_devel_user
+
 - name: install packages
   dnf:
     name: "{{ item }}"
@@ -18,7 +25,7 @@
 - name: add user to pesign
   lineinfile:
     path: /etc/pesign/users
-    line: "{{ lookup('env','USER') }}"
+    line: "{{ kernel_devel_user }}"
   become: true
 
 - name: authorize user to build

@@ -1,4 +1,13 @@
 ---
+- name: check vars
+  fail:
+    msg: "variable '{{ item }}' is not defined"
+  when: item not in vars
+  with_items:
+    - z_user
+    - z_home_path
+    - z_group
+
 - name: git clone repo
   git:
     repo: "{{ z_git_repo }}"
@@ -8,7 +17,7 @@
 - name: link z to bash lib
   file:
     src: "{{ z_src_path }}/z.sh"
-    dest: "{{ lookup('env', 'HOME') }}/.bash_lib/z.sh"
-    owner: "{{ lookup('env', 'USER') }}"
-    group: "{{ lookup('env', 'USER') }}"
+    dest: "{{ z_home_path }}/.bash_lib/z.sh"
+    owner: "{{ z_user }}"
+    group: "{{ z_group }}"
     state: link

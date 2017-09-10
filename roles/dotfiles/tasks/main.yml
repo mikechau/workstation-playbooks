@@ -1,18 +1,27 @@
 ---
+- name: check vars
+  fail:
+    msg: "variable '{{ item }}' is not defined"
+  when: item not in vars
+  with_items:
+    - dotfiles_user
+    - dotfiles_home_path
+    - dotfiles_group
+
 - name: create bash lib dir
   file:
-    path: "{{ lookup('env','HOME') }}/.bash_lib"
+    path: "{{ dotfiles_home_path }}/.bash_lib"
     state: directory
-    owner: "{{ lookup('env', 'USER') }}"
-    group: "{{ lookup('env', 'USER') }}"
+    owner: "{{ dotfiles_user }}"
+    group: "{{ dotfiles_group }}"
     mode: u=rwx,g=rwx,o=rx
 
 - name: create src dir
   file:
-    path: "{{ lookup('env','HOME') }}/code/src"
+    path: "{{ dotfiles_home_path }}/code/src"
     state: directory
-    owner: "{{ lookup('env', 'USER') }}"
-    group: "{{ lookup('env', 'USER') }}"
+    owner: "{{ dotfiles_user }}"
+    group: "{{ dotfiles_group }}"
     mode: u=rwx,g=rwx,o=rx
     recurse: true
 
@@ -21,9 +30,9 @@
 - name: add home specific rc files
   template:
     src: "home/{{ item }}.j2"
-    dest: "{{ lookup('env', 'HOME') }}/.{{ item }}"
-    owner: "{{ lookup('env', 'USER') }}"
-    group: "{{ lookup('env', 'USER') }}"
+    dest: "{{ dotfiles_home_path }}/.{{ item }}"
+    owner: "{{ dotfiles_user }}"
+    group: "{{ dotfiles_group }}"
     mode: u=rw,g=rw,o=r
   with_items:
     - irbrc
