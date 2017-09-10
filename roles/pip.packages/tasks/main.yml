@@ -16,4 +16,5 @@
     - flatdict
     - prettytable
     - virtualenv
+    - s3cmd
     - ansible
