@@ -50,7 +50,7 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - "http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release-{{ tlp_release_version }}.noarch.rpm"
+    - "http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.{{ ansible_distribution_release }}.noarch.rpm"
   become: true
 
 - name: install tlp

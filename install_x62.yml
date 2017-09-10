@@ -63,7 +63,3 @@
     - role: z
       tags:
         - z
-
-    - role: kupfer.patch
-      tags:
-        - kupfer
