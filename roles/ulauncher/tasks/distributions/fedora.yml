@@ -1,0 +1,6 @@
+---
+- name: install ulauncher
+  dnf:
+    name: "{{ ulauncher_fedora_rpm_url }}"
+    state: present
+  become: true

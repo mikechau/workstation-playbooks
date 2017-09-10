@@ -63,3 +63,7 @@
     - role: z
       tags:
         - z
+
+    - role: ulauncher
+      tags:
+        - ulauncher
