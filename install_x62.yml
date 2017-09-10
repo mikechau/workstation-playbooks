@@ -1,6 +1,6 @@
 ---
-- name: install
-  hosts: all
+- name: install x62
+  hosts: x62
   roles:
     - role: base
       tags:

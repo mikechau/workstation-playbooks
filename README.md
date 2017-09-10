@@ -1,3 +1,3 @@
-# x62-playbooks
+# thinkpad-ansible-playbooks
 
-Config scripts for the ThinkPad x62 (51nb).
+- x62
