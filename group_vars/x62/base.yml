@@ -60,3 +60,5 @@ base_packages:
   - powertop
   - nodejs
   - python-devel
+  - wireshark-qt
+  - nemo-dropbox

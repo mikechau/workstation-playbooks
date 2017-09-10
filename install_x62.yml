@@ -90,3 +90,11 @@
     - role: pidgin
       tags:
         - pidgin
+
+    - role: dbeaver
+      tags:
+        - dbeaver
+
+    - role: calibre
+      tags:
+        - calibre

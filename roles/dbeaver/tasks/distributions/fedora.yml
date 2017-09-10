@@ -1,0 +1,6 @@
+---
+- name: install dbeaver
+  dnf:
+    name: https://dbeaver.jkiss.org/files/dbeaver-ce-latest-stable.x86_64.rpm
+    state: latest
+  become: true
