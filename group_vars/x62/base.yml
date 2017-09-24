@@ -66,3 +66,4 @@ base_packages:
   - redis
   - screen
   - tmux
+  - tmate
