@@ -131,3 +131,7 @@
     - role: trackpoint
       tags:
         - trackpoint
+
+    - role: xhost
+      tags:
+        - xhost
