@@ -1,0 +1,15 @@
+---
+- name: download zip
+  get_url:
+    url: "{{ ngrok_url }}"
+    dest: "{{ ngrok_src_path }}"
+  register: ngrok_download_result
+
+- name: extract zip
+  unarchive:
+    src: "{{ ngrok_download_result.dest }}"
+    dest: "{{ ngrok_install_path }}"
+    copy: no
+    mode: "u=rwx,g=rwx,o=rx"
+    owner: "{{ ngrok_user }}"
+    group: "{{ ngrok_group }}"

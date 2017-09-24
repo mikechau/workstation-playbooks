@@ -1,0 +1,9 @@
+---
+# ngrok_user:
+
+ngrok_home_path: "/home/{{ ngrok_user }}"
+ngrok_group: "{{ ngrok_user }}"
+ngrok_src_path: "{{ ngrok_home_path }}/code/src/packages"
+ngrok_install_path: "{{ ngrok_home_path }}/.local/bin"
+
+ngrok_url: https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
