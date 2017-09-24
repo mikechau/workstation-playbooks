@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+TARGET=$1
+INVENTORY=$2
+ACTION=$3
+
+ansible-playbook "${TARGET}_${ACTION}.yml" -i "inventories/${TARGET}/${INVENTORY}.yml" "${@:4}"
