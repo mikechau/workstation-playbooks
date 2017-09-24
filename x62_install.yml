@@ -1,5 +1,5 @@
 ---
-- name: install x62
+- name: x62 install
   hosts: x62
   roles:
     - role: base
@@ -135,10 +135,6 @@
     - role: xhost
       tags:
         - xhost
-
-    - role: gsettings
-      tags:
-        - gsettings
 
     - role: ngrok
       tags:
