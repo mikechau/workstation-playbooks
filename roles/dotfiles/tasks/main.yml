@@ -32,6 +32,14 @@
     group: "{{ dotfiles_group }}"
     mode: u=rwx,g=rwx,o=rx
 
+- name: create packages dir
+  file:
+    path: "{{ dotfiles_home_path }}/code/src/packages"
+    state: directory
+    owner: "{{ dotfiles_user }}"
+    group: "{{ dotfiles_group }}"
+    mode: u=rwx,g=rwx,o=rx
+
 - name: create backup dir
   file:
     path: "{{ dotfiles_home_path }}/code/backup"
