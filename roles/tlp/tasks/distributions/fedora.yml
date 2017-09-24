@@ -65,17 +65,20 @@
     - kernel-devel
   become: true
 
-# FIXME: Installs via tlp-updates-testing is only temporary.
-# http://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html#installation
-- name: install tlp addons
-  dnf:
-    name: "{{ item }}"
-    enablerepo: tlp-updates-testing
-    state: latest
-  with_items:
-    - akmod-tp_smapi
-    - akmod-acpi_call
-  when: tlp_install_thinkpad_addons
+- name: update tlp config for DEVICES_TO_DISABLE_ON_STARTUP
+  lineinfile:
+    path: /etc/default/tlp
+    regexp: "^DEVICES_TO_DISABLE_ON_STARTUP="
+    insertafter: '^DEVICES_TO_DISABLE_ON_STARTUP=".*"$'
+    line: 'DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"'
+  become: true
+
+- name: update tlp config for DEVICES_TO_DISABLE_ON_BAT
+  lineinfile:
+    path: /etc/default/tlp
+    regexp: "^DEVICES_TO_DISABLE_ON_BAT="
+    insertafter: '^DEVICES_TO_DISABLE_ON_BAT=".*"$'
+    line: 'DEVICES_TO_DISABLE_ON_BAT="bluetooth"'
   become: true
 
 - name: enable tlp
