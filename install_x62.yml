@@ -135,3 +135,7 @@
     - role: xhost
       tags:
         - xhost
+
+    - role: gsettings
+      tags:
+        - gsettings
