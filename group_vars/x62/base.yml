@@ -64,3 +64,5 @@ base_packages:
   - intel-gpu-tools
   - backintime-qt4
   - redis
+  - screen
+  - tmux
