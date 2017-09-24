@@ -1,0 +1,9 @@
+---
+# r8169_aspm_user:
+r8169_aspm_home_path: "/home/{{ r8169_aspm_user }}"
+r8169_aspm_group: "{{ r8169_aspm_user }}"
+
+r8169_aspm_git_repo: https://github.com/KastB/r8169
+r8169_aspm_git_version: master
+r8169_aspm_src_path: "{{ r8169_aspm_home_path }}/code/src/r8169"
+r8169_aspm_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"

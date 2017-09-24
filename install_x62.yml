@@ -22,6 +22,14 @@
       tags:
         - rpmfusion
 
+    - role: intel.gpu
+      tags:
+        - intel
+
+    - role: codecs
+      tags:
+        - codecs
+
     - role: tlp
       tags:
         - tlp
@@ -68,18 +76,7 @@
       tags:
         - ulauncher
 
-    - role: fubarhouse.nodejs
-      node_version: 6.11.3
-      node_versions:
-        - 4.8.4
-        - 7.10.1
-        - 8.4.0
-      node_packages:
-        - yarn
-      install_nvm: true
-      install_nvm_git: true
-      install_nodejs: true
-      install_npm: true
+    - role: nvm.nodejs
       tags:
         - nodejs
 
@@ -95,6 +92,38 @@
       tags:
         - dbeaver
 
+    - role: mysql.workbench
+      tags:
+        - mysql
+
     - role: calibre
       tags:
         - calibre
+
+    - role: cryfs
+      tags:
+        - cryfs
+
+    - role: hexchat
+      tags:
+        - hexchat
+
+    - role: chrome
+      tags:
+        - chrome
+
+    - role: chromium
+      tags:
+        - chromium
+
+    - role: vlc
+      tags:
+        - vlc
+
+    - role: mpv
+      tags:
+        - mpv
+
+    - role: r8169.aspm
+      tags:
+        - realtek

@@ -1,0 +1,6 @@
+---
+- name: install chrome
+  dnf:
+    name: "{{ chrome_rpm_url }}"
+    state: latest
+  become: true

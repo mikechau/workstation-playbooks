@@ -1,0 +1,16 @@
+---
+- name: install codecs
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - gstreamer1-libav
+    - gstreamer1-plugins-bad-free
+    - gstreamer1-plugins-bad-nonfree
+    - gstreamer1-plugins-ugly
+    - gstreamer1-plugins-good
+    - mpg123-libs
+    - lame-libs
+    - gstreamer1-plugins-bad-free-extras
+    - gstreamer1-plugins-bad-freeworld
+  become: true

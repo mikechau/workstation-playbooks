@@ -1,0 +1,33 @@
+---
+- include: distributions/{{ hexchat_os_distribution | lower }}.yml
+
+- name: install hexchat scripts
+  git:
+    repo: "{{ hexchat_scripts_git_repo }}"
+    dest: "{{ hexchat_scripts_path }}"
+    version: "{{ hexchat_scripts_git_version }}"
+
+- name: create hexchat config dir
+  file:
+    path: "{{ hexchat_config_path }}"
+    state: directory
+    owner: "{{ hexchat_user }}"
+    group: "{{ hexchat_group }}"
+    mode: u=rwx,g=rwx,o=rx
+
+- name: create hexchat config addons dir
+  file:
+    path: "{{ hexchat_addons_path }}"
+    state: directory
+    owner: "{{ hexchat_user }}"
+    group: "{{ hexchat_group }}"
+    mode: u=rwx,g=rwx,o=rx
+
+- name: link hexchat addon scripts
+  file:
+    src: "{{ hexchat_scripts_path }}/{{ item }}"
+    dest: "{{ hexchat_addons_path }}/{{ item }}"
+    state: link
+    owner: "{{ hexchat_user }}"
+    group: "{{ hexchat_group }}"
+  with_items: "{{ hexchat_addons }}"

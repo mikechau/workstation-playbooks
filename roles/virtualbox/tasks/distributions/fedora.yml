@@ -6,14 +6,6 @@
   with_items:
     - virtualbox_user
 
-- name: add virtualbox repo
-  command: "/usr/bin/dnf --assumeyes config-manager --add-repo {{ virtualbox_rpm_repository }} update"
-  become: true
-
-- name: update dnf
-  command: /usr/bin/dnf --assumeyes update
-  become: true
-
 - name: install virtualbox dependencies
   package:
     name: "{{ item }}"
@@ -30,6 +22,22 @@
   - kernel-headers
   - kernel-devel
   become: true
+
+- name: check if virtualbox repo exists
+  stat:
+    path: /etc/yum.repos.d/virtualbox.repo
+  become: true
+  register: virtualbox_repo_result
+
+- name: add virtualbox repo
+  command: "/usr/bin/dnf --assumeyes config-manager --add-repo {{ virtualbox_rpm_repository }} update"
+  become: true
+  when: not virtualbox_repo_result.stat.exists
+
+- name: update dnf
+  command: /usr/bin/dnf --assumeyes update
+  become: true
+  when: not virtualbox_repo_result.stat.exists
 
 - name: install virtualbox
   package:
@@ -50,25 +58,37 @@
     append: true
     state: present
   become: true
+  when: virtualbox_install_result | changed
+
+- name: get VBoxManage path
+  command: "bash -lc 'which VBoxManage'"
+  ignore_errors: true
+  changed_when: false
+  register: virtualbox_install_vbox_manage_path_result
 
 - name: get virtualbox version
   shell: |
-    version=$(/usr/bin/VBoxManage -v)
+    version=$({{ virtualbox_install_vbox_manage_path_result.stdout }} -v)
     var1=$(echo $version | cut -d 'r' -f 1)
     var2=$(echo $version | cut -d 'r' -f 2)
     echo $var1
     echo $var2
   register: virtualbox_version_result
+  when: virtualbox_install_vbox_manage_path_result | success
+  changed_when: false
 
 - name: check if extension pack is not installed
-  command: /usr/bin/VBoxManage list extpacks
+  command: "{{ virtualbox_install_vbox_manage_path_result.stdout }} list extpacks"
   register: virtualbox_extpack_initial_check_result
   changed_when: "virtualbox_extpack_initial_check_result.stdout == 'Extension Packs: 0'"
+  when: virtualbox_install_vbox_manage_path_result | success
 
 - name: check if extension pack is installed and matches current version
-  shell: "/usr/bin/VBoxManage list extpacks | grep -c -e '{{ virtualbox_version_result.stdout_lines.0 }}' -e '{{ virtualbox_version_result.stdout_lines.1 }}'"
+  shell: "{{ virtualbox_install_vbox_manage_path_result.stdout }} list extpacks | grep -c -e '{{ virtualbox_version_result.stdout_lines.0 }}' -e '{{ virtualbox_version_result.stdout_lines.1 }}'"
   register: virtualbox_expack_current_check_result
   changed_when: "virtualbox_expack_current_check_result.stdout == 2"
+  ignore_errors: true
+  when: virtualbox_install_vbox_manage_path_result | success
 
 - name: download virtualbox extension
   get_url:
@@ -76,11 +96,11 @@
     dest: "/tmp/Oracle_VM_VirtualBox_Extension_Pack-{{ virtualbox_version_result.stdout_lines.0 }}-{{ virtualbox_version_result.stdout_lines.1 }}.vbox-extpack"
     mode: 0444
   register: virtualbox_extension_download_result
-  when: "(virtualbox_extpack_initial_check_result | changed) or (virtualbox_expack_current_check_result | changed)"
+  when: "(virtualbox_install_vbox_manage_path_result | success) and ((virtualbox_extpack_initial_check_result | changed) or (virtualbox_expack_current_check_result | changed))"
 
 # NOTE: Have to install with a license acceptance key, could change.
 # https://forums.virtualbox.org/viewtopic.php?p=391279#p391279
 - name: install virtualbox extensions
-  command: "/usr/bin/VBoxManage extpack install --replace {{ virtualbox_extension_download_result.dest }} --accept-license={{ virtualbox_license_acceptance_key }}"
-  when: "(virtualbox_extpack_initial_check_result | changed) or (virtualbox_expack_current_check_result | changed)"
+  command: "{{ virtualbox_install_vbox_manage_path_result.stdout }} extpack install --replace {{ virtualbox_extension_download_result.dest }} --accept-license={{ virtualbox_license_acceptance_key }}"
+  when: "(virtualbox_install_vbox_manage_path_result | success) and ((virtualbox_extpack_initial_check_result | changed) or (virtualbox_expack_current_check_result | changed))"
   become: true

@@ -17,6 +17,7 @@
 - name: restorecon for /var/run/tlp/lock_tlp
   command: /usr/sbin/restorecon -v /run/tlp/lock_tlp
   become: true
+  when: "(lock_tlp_selinux_type_result | changed) and ('already defined' not in lock_tlp_selinux_type_result.stderr)"
 
 - name: set selinux /var/run/tlp/last_pwr type
   command: /usr/sbin/semanage fcontext -a -t tlp_var_run_t /var/run/tlp/last_pwr
@@ -28,6 +29,7 @@
 - name: restorecon for /var/run/tlp/last_pwr
   command: /usr/sbin/restorecon -v /run/tlp/last_pwr
   become: true
+  when: "(last_pwr_tlp_selinux_type_result | changed) and ('already defined' not in last_pwr_tlp_selinux_type_result.stderr)"
 
 - name: compile selinux policy
   command: /usr/bin/make my-tlp.pp -f /usr/share/selinux/devel/Makefile
@@ -50,7 +52,7 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - "http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.{{ ansible_distribution_release }}.noarch.rpm"
+    - "http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc{{ ansible_distribution_major_version }}.noarch.rpm"
   become: true
 
 - name: install tlp

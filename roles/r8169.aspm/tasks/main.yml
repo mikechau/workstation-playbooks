@@ -1,0 +1,2 @@
+---
+- include: distributions/{{ r8169_aspm_os_distribution | lower }}.yml

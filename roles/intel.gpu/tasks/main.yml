@@ -1,0 +1,2 @@
+---
+- include: distributions/{{ intel_gpu_os_distribution | lower }}.yml

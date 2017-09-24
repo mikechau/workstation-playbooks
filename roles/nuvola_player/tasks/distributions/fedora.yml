@@ -1,13 +1,21 @@
 ---
+- name: check if nuvola repo exists
+  stat:
+    path: "/etc/yum.repos.d/tiliado.eu_nuvolaplayer_repository_rpm_fc{{ ansible_distribution_major_version }}_x86_64_stable.repo"
+  become: true
+  register: nuvola_player_repo_result
+
 - name: add nuvola player rpm key
   rpm_key:
     key: "{{ nuvola_player_rpm_key_url }}"
     state: present
   become: true
+  when: not nuvola_player_repo_result.stat.exists
 
 - name: add nuvola player repo
   command: "/usr/bin/dnf config-manager --add-repo {{ nuvola_player_rpm_repository }}"
   become: true
+  when: not nuvola_player_repo_result.stat.exists
 
 - name: install nuvola player dependencies
   dnf:

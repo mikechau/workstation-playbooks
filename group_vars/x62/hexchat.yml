@@ -1,0 +1,2 @@
+---
+hexchat_user: "{{ global_target_user }}"

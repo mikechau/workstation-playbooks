@@ -1,0 +1,2 @@
+---
+mpv_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"

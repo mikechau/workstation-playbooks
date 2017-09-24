@@ -16,6 +16,8 @@
   with_items:
     - Development tools
     - Virtualization
+  register: base_install_development_tools_result
+  changed_when: "(base_install_development_tools_result.rc == 0) and ('is already installed' not in base_install_development_tools_result.stderr)"
   become: true
 
 - name: install packages

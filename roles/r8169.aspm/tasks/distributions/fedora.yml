@@ -1,0 +1,67 @@
+---
+- name: git clone repo
+  git:
+    repo: "{{ r8169_aspm_git_repo }}"
+    dest: "{{ r8169_aspm_src_path }}"
+    version: "{{ r8169_aspm_git_version }}"
+
+- name: enable r8169_aspm
+  block:
+    - name: modprobe
+      modprobe:
+        name: r8169_aspm
+        state: present
+      become: true
+  rescue:
+    - name: get uname
+      command: /usr/bin/uname -r
+      register: r8169_aspm_uname_result
+      changed_when: false
+
+    - name: make clean
+      make:
+        chdir: "{{ r8169_aspm_src_path }}"
+        target: clean
+
+    - name: make
+      make:
+        chdir: "{{ r8169_aspm_src_path }}"
+
+    - name: make install
+      make:
+        chdir: "{{ r8169_aspm_src_path }}"
+        target: install
+      become: true
+
+    - name: depmod
+      command: /usr/sbin/depmod -a
+      args:
+        chdir: "{{ r8169_aspm_src_path }}"
+      become: true
+
+    - name: modprobe remove
+      modprobe:
+        name: r8169
+        state: absent
+      become: true
+
+    - name: modprobe
+      modprobe:
+        name: r8169_aspm
+        state: present
+      become: true
+
+    - name: update blacklist
+      lineinfile:
+        path: /etc/modprobe.d/blacklist
+        line: blacklist r8169
+        state: present
+        create: true
+        owner: root
+        group: root
+        mode: "u=rw,g=r,o=r"
+      become: true
+
+    - name: regenerate initramfs
+      command: "/usr/bin/dracut /boot/initramfs-{{ r8169_aspm_uname_result.stdout }} {{ r8169_aspm_uname_result.stdout }} -f"
+      become: true

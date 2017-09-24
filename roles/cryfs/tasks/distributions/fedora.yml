@@ -1,0 +1,24 @@
+---
+- name: install dependencies
+  dnf:
+    name: "{{ item }}"
+    state: present
+  become: true
+  with_items:
+    - git
+    - gcc-c++
+    - cmake
+    - make
+    - libcurl-devel
+    - boost-devel
+    - boost-static
+    - cryptopp-devel
+    - openssl-devel
+    - fuse-devel
+    - python
+
+- name: rpm install
+  dnf:
+    name: "{{ cryfs_rpm_url }}"
+    state: present
+  become: true

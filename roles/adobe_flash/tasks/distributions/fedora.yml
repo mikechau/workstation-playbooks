@@ -11,6 +11,7 @@
     state: latest
   with_items:
     - flash-plugin
+    - flash-player-ppapi
     - alsa-plugins-pulseaudio
     - libcurl
   become: true

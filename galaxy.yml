@@ -1,6 +1,3 @@
 ---
 - src: rvm_io.ruby
   path: galaxy_roles
-
-- src: fubarhouse.nodejs
-  path: galaxy_roles

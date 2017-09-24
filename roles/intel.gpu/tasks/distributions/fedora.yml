@@ -1,0 +1,24 @@
+---
+- name: install vaapi driver
+  dnf:
+    name: libva-intel-driver
+    state: latest
+  become: true
+
+- name: install vdpau driver
+  dnf:
+    name: libvdpau-va-gl
+    state: latest
+  become: true
+
+- name: install vaapi utils
+  dnf:
+    name: libva-utils
+    state: latest
+  become: true
+
+- name: install vdpau utils
+  dnf:
+    name: vdpauinfo
+    state: latest
+  become: true

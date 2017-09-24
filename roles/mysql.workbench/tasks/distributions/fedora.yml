@@ -1,0 +1,6 @@
+---
+- name: install mysql workbench
+  dnf:
+    name: "http://repo.mysql.com/yum/mysql-tools-community/fc/{{ ansible_distribution_major_version }}/{{ ansible_architecture }}/mysql-workbench-community-{{ mysql_workbench_version }}-1.fc{{ ansible_distribution_major_version }}.{{ ansible_architecture }}.rpm"
+    state: present
+  become: true

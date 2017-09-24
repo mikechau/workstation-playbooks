@@ -58,7 +58,9 @@ base_packages:
   - redshift
   - redshift-gtk
   - powertop
-  - nodejs
   - python-devel
   - wireshark-qt
   - nemo-dropbox
+  - intel-gpu-tools
+  - backintime-qt4
+  - redis

@@ -1,0 +1,6 @@
+---
+- name: install hexchat
+  dnf:
+    name: hexchat
+    state: latest
+  become: true

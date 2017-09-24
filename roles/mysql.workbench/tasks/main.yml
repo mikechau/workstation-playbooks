@@ -1,0 +1,2 @@
+---
+- include: distributions/{{ mysql_workbench_os_distribution | lower }}.yml

@@ -1,0 +1,43 @@
+---
+- name: install dependencies
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - curl
+    - gcc
+    - git
+    - findutils
+    - make
+    - rsync
+    - tar
+  become: true
+
+- name: install system node
+  dnf:
+    name: nodejs
+    state: latest
+  become: true
+
+- name: check if nvm is installed
+  command: "bash -lc 'command -v nvm'"
+  ignore_errors: true
+  changed_when: false
+  register: nvm_install_check_result
+
+- name: install nvm
+  shell: "curl -o- {{ nvm_script_url }} | bash"
+  when: nvm_install_check_result | failed
+
+- name: check node version
+  command: "bash -lc 'nvm version'"
+  changed_when: false
+  register: nvm_check_node_version_result
+
+- name: install nvm node
+  command: "bash -lc 'nvm install {{ nvm_node_version }}'"
+  when: nvm_check_node_version_result.stdout != nvm_node_version
+
+- name: set default
+  command: "bash -lc 'nvm alias default {{ nvm_node_version }}'"
+  when: nvm_check_node_version_result.stdout != nvm_node_version

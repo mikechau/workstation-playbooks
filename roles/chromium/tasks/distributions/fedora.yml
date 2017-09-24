@@ -1,0 +1,54 @@
+---
+- name: install chromium
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  become: true
+  with_items:
+    - chromium
+    - chromium-headless
+    - chromium-libs
+    - chromium-libs-media
+
+- name: check if chrome is installed
+  stat:
+    path: /opt/google/chrome
+  register: chromium_check_google_install_result
+
+- name: ensure chromium-plugins dir
+  file:
+    path: "/usr/lib64/chromium-plugins"
+    owner: root
+    group: root
+    state: directory
+    mode: "u=rwx,g=rx,o=rx"
+  become: true
+
+- name: link widevine plugin from chrome
+  file:
+    src: "/opt/google/chrome/{{ item }}"
+    dest: "/usr/lib64/chromium-plugins/{{ item }}"
+    owner: root
+    group: root
+    state: link
+  become: true
+  with_items:
+    - libwidevinecdm.so
+    - libwidevinecdmadapter.so
+  when: chromium_check_google_install_result.stat.isdir is defined and chromium_check_google_install_result.stat.isdir
+
+- name: check if flash-plugin is installed
+  stat:
+    path: /usr/lib64/flash-plugin
+  become: true
+  register: chromium_flash_plugin_install_result
+
+- name: link flash
+  file:
+    src: "/usr/lib64/flash-plugin"
+    dest: "/usr/lib64/chromium-plugins/PepperFlash"
+    owner: root
+    group: root
+    state: link
+  become: true
+  when: chromium_flash_plugin_install_result.stat.isdir is defined and chromium_flash_plugin_install_result.stat.isdir

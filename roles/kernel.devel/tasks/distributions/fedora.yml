@@ -27,7 +27,9 @@
     path: /etc/pesign/users
     line: "{{ kernel_devel_user }}"
   become: true
+  register: kernel_devel_add_pesign_user_result
 
 - name: authorize user to build
-  shell: "bash -lc '/usr/libexec/pesign/pesign-authorize-users'"
+  shell: "bash -lc '/usr/libexec/pesign/pesign-authorize'"
   become: true
+  when: kernel_devel_add_pesign_user_result | changed

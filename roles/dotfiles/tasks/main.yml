@@ -16,6 +16,14 @@
     group: "{{ dotfiles_group }}"
     mode: u=rwx,g=rwx,o=rx
 
+- name: create code dir
+  file:
+    path: "{{ dotfiles_home_path }}/code"
+    state: directory
+    owner: "{{ dotfiles_user }}"
+    group: "{{ dotfiles_group }}"
+    mode: u=rwx,g=rwx,o=rx
+
 - name: create src dir
   file:
     path: "{{ dotfiles_home_path }}/code/src"
@@ -23,7 +31,22 @@
     owner: "{{ dotfiles_user }}"
     group: "{{ dotfiles_group }}"
     mode: u=rwx,g=rwx,o=rx
-    recurse: true
+
+- name: create backup dir
+  file:
+    path: "{{ dotfiles_home_path }}/code/backup"
+    state: directory
+    owner: "{{ dotfiles_user }}"
+    group: "{{ dotfiles_group }}"
+    mode: u=rwx,g=rwx,o=rx
+
+- name: create user config dir
+  file:
+    path: "{{ dotfiles_home_path }}/.config"
+    state: directory
+    owner: "{{ dotfiles_user }}"
+    group: "{{ dotfiles_group }}"
+    mode: u=rwx,g=rwx,o=rx
 
 - include: distributions/{{ dotfiles_os_distribution | lower }}.yml
 

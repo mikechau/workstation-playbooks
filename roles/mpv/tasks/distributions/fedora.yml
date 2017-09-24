@@ -1,0 +1,6 @@
+---
+- name: install mpv
+  dnf:
+    name: mpv
+    state: latest
+  become: true

@@ -2,19 +2,27 @@
 - name: install packages
   pip:
     name: "{{ item }}"
-  state: latest
+    state: latest
   become: true
+  with_items:
+    - setuptools
+    - virtualenv
+
+- name: install user packages
+  pip:
+    name: "{{ item }}"
+    state: latest
+    extra_args: --user
   with_items:
     - mysqlclient
     - psycopg2
     - awscli
-    - setuptools
     - httplib2
     - cryptography
     - boto3
     - certifi
     - flatdict
     - prettytable
-    - virtualenv
     - s3cmd
     - ansible
+    - jq

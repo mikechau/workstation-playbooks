@@ -1,4 +1,11 @@
 ---
+- name: check daemons_enable_cluster_mode
+  command: /usr/sbin/getsebool daemons_enable_cluster_mode
+  become: true
+  register: selinux_config_daemon_enable_cluster_mode_result
+  changed_when: false
+
 - name: enable daemons_enable_cluster_mode
   command: /usr/sbin/setsebool -P daemons_enable_cluster_mode 1
   become: true
+  when: "'off' in selinux_config_daemon_enable_cluster_mode_result.stdout"

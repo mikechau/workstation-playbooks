@@ -1,0 +1,5 @@
+---
+cryfs_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
+cryfs_version: "0.9.7"
+cryfs_git_commit: gd5f070dd
+cryfs_rpm_url: "https://github.com/mikechau/cryfs-rpm/releases/download/v{{ cryfs_version }}/cryfs-{{ cryfs_version }}.1.{{ cryfs_git_commit }}-Linux.rpm"

@@ -1,0 +1,2 @@
+---
+- include: distributions/{{ vlc_os_distribution | lower }}.yml

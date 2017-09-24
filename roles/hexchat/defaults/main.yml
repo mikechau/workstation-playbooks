@@ -1,0 +1,16 @@
+---
+# hexchat_user:
+
+hexchat_home_path: "/home/{{ hexchat_user }}"
+hexchat_config_path: "{{ hexchat_home_path }}/.config/hexchat"
+hexchat_addons_path: "{{ hexchat_config_path }}/addons"
+hexchat_group: "{{ hexchat_user }}"
+
+hexchat_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
+hexchat_scripts_git_repo: https://github.com/mikechau/hexchat-scripts.git
+hexchat_scripts_path: "{{ hexchat_home_path }}/code/src/hexchat-scripts"
+hexchat_scripts_git_version: master
+
+hexchat_addons:
+  - cinnaway.py
+  - slap.py

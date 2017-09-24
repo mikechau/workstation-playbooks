@@ -1,0 +1,4 @@
+---
+# gsettings_user:
+gsettings_home_dir: "/home/{{ gsettings_user }}"
+gsettings_gnome_screenshot_auto_save_dir: "{{ gsettings_home_dir }}/Dropbox/Public/Screenshots"

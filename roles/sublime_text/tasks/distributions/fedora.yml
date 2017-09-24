@@ -5,12 +5,20 @@
     state: present
   become: true
 
-- name: add sublime text repo
-  command: "/usr/bin/dnf config-manager --add-repo {{ sublime_text_rpm_repository }}"
+- name: check if sublime text repo exists
+  stat:
+    path: /etc/yum.repos.d/sublime-text.repo
   become: true
+  register: sublime_text_repo_result
+
+- name: add sublime text repo
+  command: "/usr/bin/dnf config-manager --assumeyes --add-repo {{ sublime_text_rpm_repository }}"
+  become: true
+  when: not sublime_text_repo_result.stat.exists
 
 - name: install sublime text
   dnf:
     name: sublime-text
     state: latest
   become: true
+  when: not sublime_text_repo_result.stat.exists
