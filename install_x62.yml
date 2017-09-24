@@ -127,3 +127,7 @@
     - role: r8169.aspm
       tags:
         - realtek
+
+    - role: trackpoint
+      tags:
+        - trackpoint
