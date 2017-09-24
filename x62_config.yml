@@ -1,0 +1,7 @@
+---
+- name: x62 config
+  hosts: x62
+  roles:
+    - role: gsettings
+      tags:
+        - gsettings
