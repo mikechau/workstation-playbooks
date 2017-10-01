@@ -1,0 +1,50 @@
+---
+- name: check if heroku is installed
+  stat:
+    path: /usr/local/bin/heroku
+  register: heroku_install_result
+
+- name: download heroku cli
+  get_url:
+    url: https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz
+    dest: /tmp/heroku.tar.gz
+    owner: "{{ heroku_user }}"
+    group: "{{ heroku_group }}"
+    mode: u=rw,g=rw,o=r
+  when: not heroku_install_result.stat.exists
+
+- name: ensure heroku lib
+  file:
+    path: /usr/local/lib/heroku
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  become: true
+
+- name: extract heroku
+  unarchive:
+    src: /tmp/heroku.tar.gz
+    dest: /usr/local/lib/heroku
+    remote_src: true
+    extra_opts:
+      - "--strip-components=1"
+    owner: root
+    group: root
+  become: true
+  when: not heroku_install_result.stat.exists
+
+- name: link heroku
+  file:
+    src: /usr/local/lib/heroku/bin/heroku
+    dest: /usr/local/bin/heroku
+    state: link
+    owner: root
+    group: root
+  become: true
+
+- name: clean up heroku binary
+  file:
+    path: /tmp/heroku.tar.gz
+    state: absent
+  become: true
