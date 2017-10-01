@@ -13,7 +13,7 @@
   when: not nuvola_player_repo_result.stat.exists
 
 - name: add nuvola player repo
-  command: "/usr/bin/dnf config-manager --add-repo {{ nuvola_player_rpm_repository }}"
+  command: "/usr/bin/dnf config-manager --assumeyes --add-repo {{ nuvola_player_rpm_repository }}"
   become: true
   when: not nuvola_player_repo_result.stat.exists
 
