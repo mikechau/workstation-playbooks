@@ -53,7 +53,7 @@
 
     - name: update blacklist
       lineinfile:
-        path: /etc/modprobe.d/blacklist
+        path: /etc/modprobe.d/blacklist.conf
         line: blacklist r8169
         state: present
         create: true
@@ -65,3 +65,4 @@
     - name: regenerate initramfs
       command: "/usr/bin/dracut /boot/initramfs-{{ r8169_aspm_uname_result.stdout }} {{ r8169_aspm_uname_result.stdout }} -f"
       become: true
+      ignore_errors: true
