@@ -67,3 +67,4 @@ base_packages:
   - screen
   - tmux
   - tmate
+  - dnf-plugins-core
