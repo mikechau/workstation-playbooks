@@ -1,0 +1,65 @@
+---
+- name: add docker rpm key
+  rpm_key:
+    key: "{{ docker_rpm_key_url }}"
+    state: present
+  become: true
+
+- name: check if docker repo exists
+  stat:
+    path: /etc/yum.repos.d/docker-ce.repo
+  become: true
+  register: docker_repo_result
+
+- name: add docker repo
+  command: "/usr/bin/dnf config-manager --assumeyes --add-repo {{ docker_rpm_repository }}"
+  become: true
+  when: not docker_repo_result.stat.exists
+
+- name: install docker
+  dnf:
+    name: docker-ce
+    state: latest
+  become: true
+
+- name: install docker-compose
+  pip:
+    name: docker-compose
+    state: latest
+    extra_args: --user
+
+- name: start docker
+  service:
+    name: docker
+    state: started
+  become: true
+
+- name: stop docker
+  service:
+    name: docker
+    state: stopped
+  become: true
+
+- name: configure docker
+  template:
+    src: etc/docker/daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  become: true
+  when: docker_custom_daemon_config
+
+- name: remove docker daemon config
+  file:
+    path: /etc/docker/daemon.json
+    state: absent
+  become: true
+  when: not docker_custom_daemon_config
+
+- name: enable docker service
+  service:
+    name: docker
+    state: started
+    enabled: true
+  become: true

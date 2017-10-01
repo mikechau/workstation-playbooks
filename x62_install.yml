@@ -143,3 +143,7 @@
     - role: heroku
       tags:
         - heroku
+
+    - role: docker
+      tags:
+        - docker

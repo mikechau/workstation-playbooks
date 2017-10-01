@@ -1,0 +1,2 @@
+---
+- include: distributions/{{ docker_os_distribution | lower }}.yml
