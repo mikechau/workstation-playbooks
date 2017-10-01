@@ -1,2 +1,5 @@
 ---
-xhost_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
+# xhost_user:
+
+xhost_group: "{{ xhost_user }}"
+xhost_autostart_path: "/home/{{ xhost_user }}/.config/autostart"

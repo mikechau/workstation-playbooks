@@ -1,2 +1,18 @@
 ---
-- include: distributions/{{ xhost_os_distribution | lower }}.yml
+- name: ensure startup dir
+  file:
+    path: /opt/startup
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  become: true
+
+- name: add xhost-config script
+  template:
+    src: opt/startup/xhost-config.sh.j2
+    dest: /opt/startup/xhost-config.sh
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  become: true

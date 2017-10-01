@@ -1,4 +1,0 @@
----
-- name: allow root access to x server
-  shell: "bash -lc 'xhost +SI:localhost:root'"
-
