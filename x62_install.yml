@@ -152,3 +152,6 @@
       tags:
         - gocryptfs
 
+    - role: xmind
+      tags:
+        - xmind

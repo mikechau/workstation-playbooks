@@ -1,0 +1,6 @@
+---
+- name: rpm install
+  dnf:
+    name: "{{ xmind_rpm_url }}"
+    state: present
+  become: true

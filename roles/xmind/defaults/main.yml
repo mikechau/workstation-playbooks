@@ -1,0 +1,7 @@
+---
+xmind_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
+xmind_version: "8.5"
+xmind_subversion: 1
+xmind_rpm_codename: fc26
+xmind_rpm_arch: "{{ ansible_machine }}"
+xmind_rpm_url: "https://github.com/mikechau/xmind/releases/download/v{{ xmind_version }}-r{{ xmind_subversion }}/xmind-{{ xmind_version }}-{{ xmind_subversion }}.{{ xmind_rpm_codename }}.{{ xmind_rpm_arch }}.rpm"
