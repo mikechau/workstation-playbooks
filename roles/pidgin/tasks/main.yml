@@ -1,2 +1,2 @@
 ---
-- include: distributions/{{ pidgin_os_distribution | lower }}.yml
+- import_tasks: "distributions/{{ pidgin_os_distribution | lower }}.yml"

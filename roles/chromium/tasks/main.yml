@@ -1,2 +1,2 @@
 ---
-- include: distributions/{{ chromium_os_distribution | lower }}.yml
+- import_tasks: "distributions/{{ chromium_os_distribution | lower }}.yml"

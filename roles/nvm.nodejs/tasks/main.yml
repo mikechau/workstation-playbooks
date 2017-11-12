@@ -1,2 +1,2 @@
 ---
-- include: distributions/{{ nvm_nodejs_os_distribution | lower }}.yml
+- import_tasks: "distributions/{{ nvm_nodejs_os_distribution | lower }}.yml"

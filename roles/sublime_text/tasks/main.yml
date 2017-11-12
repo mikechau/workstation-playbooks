@@ -1,2 +1,2 @@
 ---
-- include: distributions/{{ sublime_text_os_distribution | lower }}.yml
+- import_tasks: "distributions/{{ sublime_text_os_distribution | lower }}.yml"

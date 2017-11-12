@@ -1,2 +1,2 @@
 ---
-- include: distributions/{{ ulauncher_os_distribution | lower }}.yml
+- import_tasks: "distributions/{{ ulauncher_os_distribution | lower }}.yml"

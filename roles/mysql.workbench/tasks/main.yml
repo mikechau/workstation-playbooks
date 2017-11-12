@@ -1,2 +1,2 @@
 ---
-- include: distributions/{{ mysql_workbench_os_distribution | lower }}.yml
+- import_tasks: "distributions/{{ mysql_workbench_os_distribution | lower }}.yml"

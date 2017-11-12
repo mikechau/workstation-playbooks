@@ -16,7 +16,7 @@ echo "---" > ./roles/$ROLE_NAME/defaults/main.yml
 echo "${ROLE_NAME}_os_distribution: \"{{ global_os_distribution | default(ansible_distribution) }}\"" >> ./roles/$ROLE_NAME/defaults/main.yml
 
 echo "---" > ./roles/$ROLE_NAME/tasks/main.yml
-echo "- include: distributions/{{ ${ROLE_NAME}_os_distribution | lower }}.yml" >> ./roles/$ROLE_NAME/tasks/main.yml
+echo "- import_tasks: \"distributions/{{ ${ROLE_NAME}_os_distribution | lower }}.yml\"" >> ./roles/$ROLE_NAME/tasks/main.yml
 
 echo "---" > ./roles/$ROLE_NAME/tasks/distributions/fedora.yml
 

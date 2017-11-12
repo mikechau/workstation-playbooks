@@ -1,2 +1,2 @@
 ---
-- include: "distributions/{{ virtualbox_os_distribution | lower }}.yml"
+- import_tasks: "distributions/{{ virtualbox_os_distribution | lower }}.yml"

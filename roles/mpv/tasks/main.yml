@@ -1,2 +1,2 @@
 ---
-- include: distributions/{{ mpv_os_distribution | lower }}.yml
+- import_tasks: "distributions/{{ mpv_os_distribution | lower }}.yml"
