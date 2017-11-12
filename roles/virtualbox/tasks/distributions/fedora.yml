@@ -101,6 +101,6 @@
 # NOTE: Have to install with a license acceptance key, could change.
 # https://forums.virtualbox.org/viewtopic.php?p=391279#p391279
 - name: install virtualbox extensions
-  command: "{{ virtualbox_install_vbox_manage_path_result.stdout }} extpack install --replace {{ virtualbox_extension_download_result.dest }} --accept-license={{ virtualbox_license_acceptance_key }}"
+  shell: "echo y | {{ virtualbox_install_vbox_manage_path_result.stdout }} extpack install --replace {{ virtualbox_extension_download_result.dest }} --accept-license={{ virtualbox_license_acceptance_key }}"
   when: "(virtualbox_install_vbox_manage_path_result | success) and ((virtualbox_extpack_initial_check_result | changed) or (virtualbox_expack_current_check_result | changed))"
   become: true
