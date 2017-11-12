@@ -1,0 +1,7 @@
+---
+gocryptfs_version: v1.4.2
+gocryptfs_binary_url: "https://github.com/rfjakob/gocryptfs/releases/download/{{ gocryptfs_version }}/gocryptfs_{{ gocryptfs_version }}_linux-static_amd64.tar.gz"
+gocryptfs_key_url: "https://github.com/rfjakob/gocryptfs/releases/download/{{ gocryptfs_version }}/gocryptfs_{{ gocryptfs_version }}_linux-static_amd64.tar.gz.asc"
+gocryptfs_binary_path: /usr/local/bin/gocryptfs
+gocryptfs_key_id: 23A02740
+gocryptfs_signing_key_url: https://nuetzlich.net/gocryptfs-signing-key.pub

@@ -147,3 +147,8 @@
     - role: docker
       tags:
         - docker
+
+    - role: gocryptfs
+      tags:
+        - gocryptfs
+

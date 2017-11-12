@@ -1,0 +1,113 @@
+---
+- name: check gocryptfs version
+  command: "{{ gocryptfs_binary_path }} -version"
+  register: gocryptfs_check_result
+  changed_when: (gocryptfs_check_result.stdout is defined and gocryptfs_version not in gocryptfs_check_result.stdout) or gocryptfs_check_result.stdout is not defined
+  failed_when: false
+
+- name: check if gpg key is present
+  command: "/usr/bin/gpg --list-keys {{ gocryptfs_key_id }}"
+  ignore_errors: true
+  changed_when: false
+  register: gocryptfs_check_key_result
+
+- name: download signing key
+  get_url:
+    url: "{{ gocryptfs_signing_key_url }}"
+    dest: /tmp/gocryptfs-signing-key.pub
+    mode: u=r,g=r,o=r
+  when: gocryptfs_check_key_result | failed
+
+- name: install key
+  command: "/usr/bin/gpg --import /tmp/gocryptfs-signing-key.pub"
+  when: gocryptfs_check_key_result | failed
+
+- name: clean up signing key
+  file:
+    path: /tmp/gocryptfs-signing-key.pub
+    state: absent
+
+- name: create directory
+  file:
+    path: /tmp/gocryptfs-src
+    state: directory
+  when: gocryptfs_check_result | changed
+
+- name: download gocryptfs binary
+  get_url:
+    url: "{{ gocryptfs_binary_url }}"
+    dest: /tmp/gocryptfs-src/gocryptfs-{{ gocryptfs_version }}.tar.gz
+    mode: u=rw,g=r,o=r
+  when: gocryptfs_check_result | changed
+  register: gocryptfs_download_result
+
+- name: download gocryptfs key
+  get_url:
+    url: "{{ gocryptfs_key_url }}"
+    dest: /tmp/gocryptfs-src/gocryptfs-{{ gocryptfs_version }}.asc
+    mode: u=rw,g=r,o=r
+  when: gocryptfs_check_result | changed
+  register: gocryptfs_download_key_result
+
+- name: verify binary
+  command: "/usr/bin/gpg --batch --verify /tmp/gocryptfs-src/gocryptfs-{{ gocryptfs_version }}.asc gocryptfs-{{ gocryptfs_version }}.tar.gz"
+  args:
+    chdir: /tmp/gocryptfs-src
+  changed_when: false
+  when: gocryptfs_check_result | changed
+
+- name: unarchive
+  unarchive:
+    src: "{{ gocryptfs_download_result.dest }}"
+    dest: "/tmp/gocryptfs-src"
+    copy: no
+    mode: "u=rwx,g=rx,o=rx"
+  become: true
+  when: gocryptfs_check_result | changed
+
+- name: set binary permissions
+  file:
+    path: "/tmp/gocryptfs-src/gocryptfs"
+    state: file
+    mode: u=rwx,g=rx,o=rx
+    owner: root
+    group: root
+  become: true
+  when: gocryptfs_check_result | changed
+
+- name: set manpage permissions
+  file:
+    path: "/tmp/gocryptfs-src/gocryptfs.1"
+    state: file
+    mode: u=rw,g=r,o=r
+    owner: root
+    group: root
+  become: true
+  when: gocryptfs_check_result | changed
+
+- name: install binary
+  command: "mv /tmp/gocryptfs-src/gocryptfs {{ gocryptfs_binary_path }}"
+  args:
+    creates: "{{ gocryptfs_binary_path }}"
+    removes: /tmp/gocryptfs-src/gocryptfs
+  become: true
+  when: gocryptfs_check_result | changed
+
+- name: install manpage
+  command: "mv /tmp/gocryptfs-src/gocryptfs.1 /usr/local/share/man/man1/gocryptfs.1"
+  args:
+    creates: /usr/local/share/man/man1/gocryptfs.1
+    removes: /tmp/gocryptfs-src/gocryptfs.1
+  become: true
+  when: gocryptfs_check_result | changed
+
+- name: update mandb
+  command: mandb
+  become: true
+  when: gocryptfs_check_result | changed
+
+- name: clean up src dir
+  file:
+    path: /tmp/gocryptfs-src
+    state: absent
+  become: true
