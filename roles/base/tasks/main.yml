@@ -7,8 +7,3 @@
 
 - include_tasks: "distributions/{{ base_os_distribution | lower }}.yml"
 
-- name: remove thunderbird
-  dnf:
-    name: thunderbird
-    state: absent
-  become: true
