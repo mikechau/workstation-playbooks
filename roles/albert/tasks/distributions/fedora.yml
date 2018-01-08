@@ -1,0 +1,23 @@
+---
+- name: add albert rpm key
+  rpm_key:
+    key: "{{ albert_rpm_key_url }}"
+    state: present
+  become: true
+
+- name: check if albert repo exists
+  stat:
+    path: "/etc/yum.repos.d/home:manuelschneid3r.repo"
+  become: true
+  register: albert_repo_result
+
+- name: add albert repo
+  command: "/usr/bin/dnf config-manager --assumeyes --add-repo {{ albert_rpm_repository }}"
+  become: true
+  when: not albert_repo_result.stat.exists
+
+- name: install albert
+  dnf:
+    name: albert
+    state: latest
+  become: true

@@ -60,10 +60,6 @@
       tags:
         - flash
 
-    - role: nuvola_player
-      tags:
-        - nuvola
-
     - role: dotfiles
       tags:
         - dotfiles
@@ -71,10 +67,6 @@
     - role: z
       tags:
         - z
-
-    - role: ulauncher
-      tags:
-        - ulauncher
 
     - role: nvm.nodejs
       tags:
@@ -91,10 +83,6 @@
     - role: dbeaver
       tags:
         - dbeaver
-
-    - role: mysql.workbench
-      tags:
-        - mysql
 
     - role: calibre
       tags:
@@ -124,10 +112,6 @@
       tags:
         - mpv
 
-    - role: r8169.aspm
-      tags:
-        - realtek
-
     - role: trackpoint
       tags:
         - trackpoint
@@ -155,3 +139,11 @@
     - role: xmind
       tags:
         - xmind
+
+    - role: fonts
+      tags:
+        - fonts
+
+    - role: albert
+      tags:
+        - albert

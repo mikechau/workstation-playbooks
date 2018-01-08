@@ -56,7 +56,7 @@
     group: "{{ dotfiles_group }}"
     mode: u=rwx,g=rwx,o=rx
 
-- import_tasks: "distributions/{{ dotfiles_os_distribution | lower }}.yml"
+- include_tasks: "distributions/{{ dotfiles_os_distribution | lower }}.yml"
 
 - name: add home specific rc files
   template:

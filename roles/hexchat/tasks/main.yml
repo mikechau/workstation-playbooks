@@ -1,5 +1,5 @@
 ---
-- import_tasks: "distributions/{{ hexchat_os_distribution | lower }}.yml"
+- include_tasks: "distributions/{{ hexchat_os_distribution | lower }}.yml"
 
 - name: install hexchat scripts
   git:

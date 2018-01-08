@@ -1,2 +1,2 @@
 ---
-- import_tasks: "distributions/{{ adobe_flash_os_distribution | lower }}.yml"
+- include_tasks: "distributions/{{ adobe_flash_os_distribution | lower }}.yml"

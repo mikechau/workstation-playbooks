@@ -1,0 +1,15 @@
+# Requires rpmfusion repos.
+
+---
+- name: add copr repo
+  command: "/usr/bin/dnf copr enable dawid/better_fonts -y"
+  become: true
+
+- name: install font packages
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  become: true
+  with_items:
+    - fontconfig-enhanced-defaults
+    - fontconfig-font-replacements

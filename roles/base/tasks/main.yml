@@ -5,7 +5,7 @@
     state: latest
   become: true
 
-- import_tasks: "distributions/{{ base_os_distribution | lower }}.yml"
+- include_tasks: "distributions/{{ base_os_distribution | lower }}.yml"
 
 - name: remove thunderbird
   dnf:

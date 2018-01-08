@@ -1,0 +1,4 @@
+---
+albert_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
+albert_rpm_key_url: "https://build.opensuse.org/projects/home:manuelschneid3r/public_key.gpg"
+albert_rpm_repository: "https://download.opensuse.org/repositories/home:manuelschneid3r/Fedora_{{ ansible_distribution_major_version }}/home:manuelschneid3r.repo"

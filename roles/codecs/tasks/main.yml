@@ -1,2 +1,2 @@
 ---
-- import_tasks: "distributions/{{ codecs_os_distribution | lower }}.yml"
+- include_tasks: "distributions/{{ codecs_os_distribution | lower }}.yml"

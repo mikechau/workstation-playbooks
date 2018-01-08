@@ -1,4 +1,4 @@
 ---
 ulauncher_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
-ulauncher_version: "3.1.1"
+ulauncher_version: "3.2.1"
 ulauncher_fedora_rpm_url: "https://github.com/Ulauncher/Ulauncher/releases/download/{{ ulauncher_version }}.r0/ulauncher_{{ ulauncher_version }}.r0_fedora.rpm"

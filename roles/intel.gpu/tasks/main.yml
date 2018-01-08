@@ -1,2 +1,2 @@
 ---
-- import_tasks: "distributions/{{ intel_gpu_os_distribution | lower }}.yml"
+- include_tasks: "distributions/{{ intel_gpu_os_distribution | lower }}.yml"

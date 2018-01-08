@@ -1,2 +1,2 @@
 ---
-- import_tasks: "distributions/{{ selinux_policies_os_distribution | lower }}.yml"
+- include_tasks: "distributions/{{ selinux_policies_os_distribution | lower }}.yml"

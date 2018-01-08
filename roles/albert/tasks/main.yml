@@ -1,0 +1,2 @@
+---
+- include_tasks: "distributions/{{ albert_os_distribution | lower }}.yml"

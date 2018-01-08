@@ -68,3 +68,5 @@ base_packages:
   - tmux
   - tmate
   - dnf-plugins-core
+  - dnf-plugin-system-upgrade
+  - mediawriter
