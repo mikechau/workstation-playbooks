@@ -1,3 +1,0 @@
----
-mysql_workbench_os_distribution: "{{ global_os_distribution | default(ansible_distribution) }}"
-mysql_workbench_version: 6.3.9

@@ -22,18 +22,3 @@
     name: "{{ cryfs_rpm_url }}"
     state: present
   become: true
-
-- name: add sirikali repo
-  get_url:
-    url: https://download.opensuse.org/repositories/home:obs_mhogomchungu/Fedora_26/home:obs_mhogomchungu.repo
-    dest: /etc/yum.repos.d/obs_mhogomchungu.repo
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
-  become: true
-
-- name: install sirikali
-  dnf:
-    name: sirikali
-    state: latest
-  become: true
